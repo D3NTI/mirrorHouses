@@ -12,7 +12,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding-top: 70px;
-  /* To prevent content from being hidden behind the fixed navbar */
 }
 
 :root {

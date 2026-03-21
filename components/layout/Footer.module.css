@@ -1,0 +1,100 @@
+/* components/layout/Footer.module.css */
+
+.footer {
+  background: var(--color-forest);
+  color: var(--color-light);
+  padding-top: 3rem;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 3rem;
+}
+
+.brand {
+}
+
+.brandName {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  letter-spacing: 3px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.brandDesc {
+  font-size: 13px;
+  color: var(--color-moss);
+  line-height: 1.6;
+}
+
+.colTitle {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-moss);
+  margin-bottom: 14px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav a {
+  color: var(--color-light);
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.nav a:hover {
+  color: var(--color-moss);
+}
+
+.contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contacts a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-light);
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.contacts a:hover {
+  color: var(--color-moss);
+}
+
+.socialsRow {
+  display: flex;
+  gap: 16px;
+}
+
+.socialsRow a {
+  color: var(--color-light);
+  transition: color 0.2s;
+}
+
+.socialsRow a:hover {
+  color: var(--color-moss);
+}
+
+.bottom {
+  border-top: 0.5px solid var(--color-fir);
+  padding: 1rem 2rem;
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-moss);
+  max-width: 100%;
+}

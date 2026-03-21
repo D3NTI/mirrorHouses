@@ -1,11 +1,12 @@
 import Navbar from '../components/layout/Navbar';
+import Footer from '../components/layout/Footer';
 import '../styles/globals.css';
 
 export default function App({ Component, pageProps }) {
   return (
     <>
       <Navbar />
-      <Component {...pageProps} />{' '}
+      <Component {...pageProps} /> <Footer />
     </>
   );
 }
