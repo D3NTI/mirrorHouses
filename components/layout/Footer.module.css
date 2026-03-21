@@ -98,3 +98,27 @@
   color: var(--color-moss);
   max-width: 100%;
 }
+
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .brand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .brandName {
+    font-size: 20px;
+  }
+  .bottom {
+    padding: 1rem;
+    font-size: 11px;
+  }
+}
