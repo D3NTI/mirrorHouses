@@ -1,0 +1,32 @@
+.section {
+  background: var(--color-bg);
+  padding: 100px 2rem;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.label {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--color-moss);
+  margin-bottom: 12px;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: 40px;
+  font-weight: 400;
+  color: var(--color-forest);
+  margin-bottom: 12px;
+}
+
+.desc {
+  font-size: 15px;
+  color: var(--color-text-muted);
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
