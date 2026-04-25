@@ -3,6 +3,7 @@ import Houses from '../components/sections/Houses';
 import Amenities from '../components/sections/Amenities';
 import Gallery from '../components/sections/Gallery';
 import Booking from '../components/sections/Booking';
+import Map from '../components/sections/Map';
 export default function Home() {
   return (
     <>
@@ -11,6 +12,7 @@ export default function Home() {
       <Amenities />
       <Gallery />
       <Booking />
+      <Map />
     </>
   );
 }

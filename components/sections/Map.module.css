@@ -1,0 +1,80 @@
+.section {
+  background: var(--color-bg);
+  padding: 100px 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.label {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--color-moss);
+  margin-bottom: 12px;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: 40px;
+  font-weight: 400;
+  color: var(--color-forest);
+  margin-bottom: 12px;
+}
+
+.desc {
+  font-size: 15px;
+  color: var(--color-text-muted);
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.mapWrap {
+  max-width: 1200px;
+  margin: 0 auto 40px;
+  padding: 0 2rem;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.map {
+  display: block;
+  border-radius: 16px;
+}
+
+.info {
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.infoLabel {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-moss);
+}
+
+.infoValue {
+  font-size: 16px;
+  color: var(--color-forest);
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 28px;
+  }
+  .info {
+    gap: 24px;
+  }
+}
