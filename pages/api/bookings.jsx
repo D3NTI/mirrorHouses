@@ -3,7 +3,8 @@ import prisma from '../../lib/prisma';
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
-      const { name, phone, email, house, dateFrom, dateTo } = req.body;
+      const { name, phone, email, house, dateFrom, dateTo, kupel, totalPrice } =
+        req.body;
 
       const booking = await prisma.booking.create({
         data: {
@@ -13,6 +14,8 @@ export default async function handler(req, res) {
           house,
           dateFrom: new Date(dateFrom),
           dateTo: new Date(dateTo),
+          kupel,
+          totalPrice,
         },
       });
 

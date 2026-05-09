@@ -10,18 +10,32 @@ const houses = [
   { id: '3', name: 'Барнхауз' },
 ];
 
+const PRICE_PER_NIGHT = 330;
+const KUPEL_PRICE = 150;
+
+function getDaysBetween(from, to) {
+  if (!from || !to) return 1;
+  const diff = Math.abs(new Date(to) - new Date(from));
+  const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+  return days || 1;
+}
+
 export default function BookingForm() {
   const [form, setForm] = useState({
     name: '',
     phone: '',
     email: '',
     house: '',
+    kupel: false,
     agree: false,
   });
   const [range, setRange] = useState({ from: undefined, to: undefined });
   const [submitted, setSubmitted] = useState(false);
   const [bookedDates, setBookedDates] = useState([]);
   const successRef = useRef(null);
+
+  const nights = getDaysBetween(range?.from, range?.to);
+  const totalPrice = PRICE_PER_NIGHT * nights + (form.kupel ? KUPEL_PRICE : 0);
 
   useEffect(() => {
     const fetchAvailability = async () => {
@@ -92,6 +106,8 @@ export default function BookingForm() {
           house: form.house,
           dateFrom: range.from,
           dateTo: range.to || range.from,
+          kupel: form.kupel,
+          totalPrice,
         }),
       });
 
@@ -112,7 +128,16 @@ export default function BookingForm() {
     return (
       <div className={styles.success} ref={successRef}>
         <h3>Заявка отправлена!</h3>
-        <p>Мы свяжемся с вами в ближайшее время.</p>
+        <p>Мы свяжемся с вами в ближайшее время для подтверждения брони.</p>
+        <div className={styles.successPrice}>
+          <span>Итого к оплате:</span>
+          <strong>{totalPrice} BYN</strong>
+        </div>
+        {form.kupel && (
+          <p className={styles.successNote}>
+            Включая купель: +{KUPEL_PRICE} BYN
+          </p>
+        )}
       </div>
     );
   }
@@ -174,6 +199,23 @@ export default function BookingForm() {
         </div>
       </div>
 
+      <div className={styles.extras}>
+        <p className={styles.label}>Дополнительно</p>
+        <div className={styles.extraItem}>
+          <input
+            type="checkbox"
+            name="kupel"
+            id="kupel"
+            checked={form.kupel}
+            onChange={handleChange}
+            className={styles.checkbox}
+          />
+          <label htmlFor="kupel" className={styles.extraLabel}>
+            Купель <span className={styles.extraPrice}>+{KUPEL_PRICE} BYN</span>
+          </label>
+        </div>
+      </div>
+
       <div className={styles.calendarWrap}>
         <label className={styles.label}>Выберите даты</label>
         <DayPicker
@@ -190,9 +232,33 @@ export default function BookingForm() {
           <p className={styles.selectedDates}>
             {range.from.toLocaleDateString('ru-RU')}
             {range?.to && ` — ${range.to.toLocaleDateString('ru-RU')}`}
+            {' · '}
+            {nights} {nights === 1 ? 'ночь' : nights < 5 ? 'ночи' : 'ночей'}
           </p>
         )}
       </div>
+
+      {range?.from && (
+        <div className={styles.priceBlock}>
+          <div className={styles.priceRow}>
+            <span>
+              {PRICE_PER_NIGHT} BYN × {nights}{' '}
+              {nights === 1 ? 'ночь' : nights < 5 ? 'ночи' : 'ночей'}
+            </span>
+            <span>{PRICE_PER_NIGHT * nights} BYN</span>
+          </div>
+          {form.kupel && (
+            <div className={styles.priceRow}>
+              <span>Купель</span>
+              <span>+{KUPEL_PRICE} BYN</span>
+            </div>
+          )}
+          <div className={styles.priceTotal}>
+            <span>Итого</span>
+            <strong>{totalPrice} BYN</strong>
+          </div>
+        </div>
+      )}
 
       <div className={styles.agreeRow}>
         <input

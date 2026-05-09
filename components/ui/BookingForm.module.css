@@ -128,6 +128,80 @@
   color: var(--color-text-muted);
 }
 
+.extras {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.extraItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.extraLabel {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-forest);
+  cursor: pointer;
+}
+
+.extraPrice {
+  font-size: 14px;
+  color: var(--color-moss);
+  font-weight: 600;
+}
+
+.priceBlock {
+  background: var(--color-light);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.priceRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.priceTotal {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  color: var(--color-forest);
+  border-top: 0.5px solid var(--color-moss);
+  padding-top: 8px;
+  margin-top: 4px;
+}
+
+.successPrice {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--color-light);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 16px;
+  font-size: 15px;
+  color: var(--color-forest);
+}
+
+.successPrice strong {
+  font-size: 20px;
+}
+
+.successNote {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-top: 8px;
+  text-align: center;
+}
+
 @media (max-width: 600px) {
   .fields {
     grid-template-columns: 1fr;
