@@ -1,6 +1,7 @@
 .section {
   background: var(--color-bg);
   padding: 100px 2rem;
+  min-height: 100vh;
 }
 
 .container {

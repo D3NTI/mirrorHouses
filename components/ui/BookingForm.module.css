@@ -45,9 +45,25 @@
   gap: 8px;
 }
 
+:global(.rdp-day_disabled) {
+  color: #bbb !important;
+  background: #f0f0f0 !important;
+  cursor: not-allowed !important;
+  border-radius: 6px;
+  opacity: 1 !important;
+}
+
+:global(.rdp-day_disabled:hover) {
+  background: #f0f0f0 !important;
+  color: #bbb !important;
+}
+
 .booked {
-  color: #ccc;
-  text-decoration: line-through;
+  color: #e07070 !important;
+  text-decoration: line-through !important;
+  background: #fde8e8 !important;
+  border-radius: 6px;
+  cursor: not-allowed !important;
 }
 
 .selectedDates {

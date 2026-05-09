@@ -1,24 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { DayPicker } from 'react-day-picker';
 import { ru } from 'date-fns/locale';
 import 'react-day-picker/dist/style.css';
 import styles from './BookingForm.module.css';
 
-const bookedDates = [
-  new Date(2025, 4, 1),
-  new Date(2025, 4, 2),
-  new Date(2025, 4, 3),
-  new Date(2025, 4, 10),
-  new Date(2025, 4, 11),
-  new Date(2025, 4, 20),
-  new Date(2025, 4, 21),
-  new Date(2025, 4, 22),
-];
-
 const houses = [
-  { id: 1, name: 'Берёзовый' },
-  { id: 2, name: 'Еловый' },
-  { id: 3, name: 'Барнхауз' },
+  { id: '1', name: 'Берёзовый' },
+  { id: '2', name: 'Еловый' },
+  { id: '3', name: 'Барнхауз' },
 ];
 
 export default function BookingForm() {
@@ -31,31 +20,97 @@ export default function BookingForm() {
   });
   const [range, setRange] = useState({ from: undefined, to: undefined });
   const [submitted, setSubmitted] = useState(false);
+  const [bookedDates, setBookedDates] = useState([]);
+  const successRef = useRef(null);
+
+  useEffect(() => {
+    const fetchAvailability = async () => {
+      try {
+        const res = await fetch(
+          `/api/availability${form.house ? `?house=${form.house}` : ''}`,
+        );
+        const data = await res.json();
+
+        if (data.success) {
+          const dates = [];
+          data.bookings.forEach((booking) => {
+            const from = new Date(booking.dateFrom);
+            const to = new Date(booking.dateTo);
+            const current = new Date(from);
+            while (current <= to) {
+              dates.push(new Date(current));
+              current.setDate(current.getDate() + 1);
+            }
+          });
+          setBookedDates(dates);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchAvailability();
+  }, [form.house]);
+
+  useEffect(() => {
+    if (submitted && successRef.current) {
+      successRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, [submitted]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm((f) => ({ ...f, [name]: type === 'checkbox' ? checked : value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (
       !form.name ||
       !form.phone ||
       !form.email ||
       !form.house ||
-      !range.from ||
+      !range?.from ||
       !form.agree
     ) {
       alert('Заполните все поля и выберите даты');
       return;
     }
-    setSubmitted(true);
+
+    try {
+      const res = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          phone: form.phone,
+          email: form.email,
+          house: form.house,
+          dateFrom: range.from,
+          dateTo: range.to || range.from,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setSubmitted(true);
+      } else {
+        alert('Ошибка при отправке. Попробуйте ещё раз.');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Ошибка соединения. Попробуйте ещё раз.');
+    }
   };
 
   if (submitted) {
     return (
-      <div className={styles.success}>
+      <div className={styles.success} ref={successRef}>
         <h3>Заявка отправлена!</h3>
         <p>Мы свяжемся с вами в ближайшее время.</p>
       </div>
@@ -125,16 +180,16 @@ export default function BookingForm() {
           mode="range"
           selected={range}
           onSelect={setRange}
-          disabled={bookedDates}
+          disabled={[{ before: new Date() }, ...bookedDates]}
           modifiers={{ booked: bookedDates }}
           modifiersClassNames={{ booked: styles.booked }}
           showOutsideDays
           locale={ru}
         />
-        {range.from && (
+        {range?.from && (
           <p className={styles.selectedDates}>
             {range.from.toLocaleDateString('ru-RU')}
-            {range.to && ` — ${range.to.toLocaleDateString('ru-RU')}`}
+            {range?.to && ` — ${range.to.toLocaleDateString('ru-RU')}`}
           </p>
         )}
       </div>
