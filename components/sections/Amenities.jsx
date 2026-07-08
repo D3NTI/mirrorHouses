@@ -6,31 +6,31 @@ const amenities = [
     id: 1,
     title: 'Приготовить на мангале',
     desc: 'Блюда с неповторимым ароматом дыма',
-    bg: '#2d5a3d',
+    image: '/images/amenities/mangal.png',
   },
   {
     id: 2,
     title: 'Прогулки',
     desc: 'По лесу, по бескрайним тропинкам',
-    bg: '#1a3220',
+    image: '/images/amenities/gul.png',
   },
   {
     id: 3,
     title: 'Купель под открытым небом',
     desc: 'Расслабьтесь в купели под открытым небом',
-    bg: '#3b6b4e',
+    image: '/images/amenities/kupel.png',
   },
   {
     id: 4,
     title: 'Встретить золотой рассвет и закат',
     desc: 'Здесь время замирает ради красоты',
-    bg: '#1a3220',
+    image: '/images/amenities/sunset.png',
   },
   {
     id: 5,
     title: 'Насладиться единением',
     desc: 'Почувствовать друг друга и природу',
-    bg: '#2d5a3d',
+    image: '/images/amenities/forest.png',
   },
 ];
 
@@ -48,7 +48,11 @@ export default function Amenities() {
             <div
               key={item.id}
               className={styles.card}
-              style={{ background: item.bg }}
+              style={{
+                backgroundImage: `url(${item.image})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
             >
               <div className={styles.overlay} />
               <div className={styles.content}>

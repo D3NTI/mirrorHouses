@@ -4,6 +4,8 @@ import Amenities from '../components/sections/Amenities';
 import Gallery from '../components/sections/Gallery';
 import Booking from '../components/sections/Booking';
 import Map from '../components/sections/Map';
+
+import Reviews from '../components/sections/Reviews';
 export default function Home() {
   return (
     <>
@@ -11,6 +13,7 @@ export default function Home() {
       <Houses />
       <Amenities />
       <Gallery />
+      <Reviews />
       <Booking />
       <Map />
     </>

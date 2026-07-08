@@ -20,3 +20,12 @@ model Booking {
   status    String   @default("pending")
   createdAt DateTime @default(now())
 }
+
+model Promo {
+  id         Int      @id @default(autoincrement())
+  code       String   @unique
+  discount   Int
+  isActive   Boolean  @default(true)
+  usedCount  Int      @default(0)
+  createdAt  DateTime @default(now())
+}

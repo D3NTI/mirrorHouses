@@ -39,10 +39,43 @@
   border-color: var(--color-moss);
 }
 
+.extras {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.extraItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.extraLabel {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-forest);
+  cursor: pointer;
+}
+
+.extraPrice {
+  font-size: 14px;
+  color: var(--color-moss);
+  font-weight: 600;
+}
+
 .calendarWrap {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.booked {
+  color: #e07070 !important;
+  text-decoration: line-through !important;
+  background: #fde8e8 !important;
+  border-radius: 6px;
+  cursor: not-allowed !important;
 }
 
 :global(.rdp-day_disabled) {
@@ -58,18 +91,137 @@
   color: #bbb !important;
 }
 
-.booked {
-  color: #e07070 !important;
-  text-decoration: line-through !important;
-  background: #fde8e8 !important;
-  border-radius: 6px;
-  cursor: not-allowed !important;
-}
-
 .selectedDates {
   font-size: 13px;
   color: var(--color-forest);
   font-weight: 500;
+}
+
+.promoRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.promoLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-flex;
+}
+
+.tooltipIcon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-moss);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.tooltipText {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-forest);
+  color: #fff;
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  width: 220px;
+  line-height: 1.5;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 10;
+  text-align: center;
+}
+
+.tooltipText::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--color-forest);
+}
+
+.tooltip:hover .tooltipText {
+  opacity: 1;
+}
+
+.promoInput {
+  display: flex;
+  gap: 8px;
+}
+
+.promoInput .input {
+  flex: 1;
+  text-transform: uppercase;
+}
+
+.promoBtn {
+  background: var(--color-forest);
+  color: var(--color-light);
+  font-size: 13px;
+  padding: 0 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.promoBtn:hover {
+  background: var(--color-fir);
+}
+
+.promoSuccess {
+  font-size: 12px;
+  color: var(--color-moss);
+  font-weight: 500;
+}
+
+.promoError {
+  font-size: 12px;
+  color: #e07070;
+}
+
+.priceBlock {
+  background: var(--color-light);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.priceRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.priceTotal {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  color: var(--color-forest);
+  border-top: 0.5px solid var(--color-moss);
+  padding-top: 8px;
+  margin-top: 4px;
 }
 
 .agreeRow {
@@ -126,57 +278,6 @@
 .success p {
   font-size: 15px;
   color: var(--color-text-muted);
-}
-
-.extras {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.extraItem {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.extraLabel {
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--color-forest);
-  cursor: pointer;
-}
-
-.extraPrice {
-  font-size: 14px;
-  color: var(--color-moss);
-  font-weight: 600;
-}
-
-.priceBlock {
-  background: var(--color-light);
-  border-radius: 10px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.priceRow {
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  color: var(--color-text-muted);
-}
-
-.priceTotal {
-  display: flex;
-  justify-content: space-between;
-  font-size: 16px;
-  color: var(--color-forest);
-  border-top: 0.5px solid var(--color-moss);
-  padding-top: 8px;
-  margin-top: 4px;
 }
 
 .successPrice {

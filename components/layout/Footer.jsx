@@ -39,7 +39,11 @@ export default function Footer() {
         <div className={styles.socials}>
           <span className={styles.colTitle}>Соцсети</span>
           <div className={styles.socialsRow}>
-            <a href="#" target="_blank" rel="noreferrer">
+            <a
+              href="https://www.instagram.com/hvoya.mirror.house?igsh=bXVxbDc5c2xhMWhv"
+              target="_blank"
+              rel="noreferrer"
+            >
               <FaInstagram size={22} />
             </a>
             <a href="#" target="_blank" rel="noreferrer">

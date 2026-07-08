@@ -32,10 +32,17 @@ export default function BookingForm() {
   const [range, setRange] = useState({ from: undefined, to: undefined });
   const [submitted, setSubmitted] = useState(false);
   const [bookedDates, setBookedDates] = useState([]);
+  const [promo, setPromo] = useState('');
+  const [promoApplied, setPromoApplied] = useState(null);
+  const [promoError, setPromoError] = useState('');
   const successRef = useRef(null);
 
   const nights = getDaysBetween(range?.from, range?.to);
-  const totalPrice = PRICE_PER_NIGHT * nights + (form.kupel ? KUPEL_PRICE : 0);
+  const basePrice = PRICE_PER_NIGHT * nights + (form.kupel ? KUPEL_PRICE : 0);
+  const discount = promoApplied
+    ? Math.round((basePrice * promoApplied.discount) / 100)
+    : 0;
+  const totalPrice = basePrice - discount;
 
   useEffect(() => {
     const fetchAvailability = async () => {
@@ -80,6 +87,29 @@ export default function BookingForm() {
     setForm((f) => ({ ...f, [name]: type === 'checkbox' ? checked : value }));
   };
 
+  const handlePromo = async () => {
+    if (!promo) return;
+    setPromoError('');
+
+    try {
+      const res = await fetch('/api/promo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: promo }),
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        setPromoApplied({ code: promo.toUpperCase(), discount: data.discount });
+      } else {
+        setPromoError(data.error);
+        setPromoApplied(null);
+      }
+    } catch (error) {
+      setPromoError('Ошибка проверки промокода');
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -108,6 +138,7 @@ export default function BookingForm() {
           dateTo: range.to || range.from,
           kupel: form.kupel,
           totalPrice,
+          promoCode: promoApplied?.code || null,
         }),
       });
 
@@ -133,6 +164,12 @@ export default function BookingForm() {
           <span>Итого к оплате:</span>
           <strong>{totalPrice} BYN</strong>
         </div>
+        {promoApplied && (
+          <p className={styles.successNote}>
+            Применён промокод {promoApplied.code} — скидка{' '}
+            {promoApplied.discount}%
+          </p>
+        )}
         {form.kupel && (
           <p className={styles.successNote}>
             Включая купель: +{KUPEL_PRICE} BYN
@@ -238,6 +275,45 @@ export default function BookingForm() {
         )}
       </div>
 
+      <div className={styles.promoRow}>
+        <div className={styles.promoLabel}>
+          <span className={styles.label}>Промокод</span>
+          <div className={styles.tooltip}>
+            <span className={styles.tooltipIcon}>?</span>
+            <div className={styles.tooltipText}>
+              Промокоды публикуются в нашем Instagram. Подпишитесь чтобы не
+              пропустить скидки!
+            </div>
+          </div>
+        </div>
+        <div className={styles.promoInput}>
+          <input
+            className={styles.input}
+            type="text"
+            placeholder="Введите промокод"
+            value={promo}
+            onChange={(e) => {
+              setPromo(e.target.value.toUpperCase());
+              setPromoApplied(null);
+              setPromoError('');
+            }}
+          />
+          <button
+            type="button"
+            className={styles.promoBtn}
+            onClick={handlePromo}
+          >
+            Применить
+          </button>
+        </div>
+        {promoApplied && (
+          <p className={styles.promoSuccess}>
+            Промокод {promoApplied.code} — скидка {promoApplied.discount}%
+          </p>
+        )}
+        {promoError && <p className={styles.promoError}>{promoError}</p>}
+      </div>
+
       {range?.from && (
         <div className={styles.priceBlock}>
           <div className={styles.priceRow}>
@@ -251,6 +327,15 @@ export default function BookingForm() {
             <div className={styles.priceRow}>
               <span>Купель</span>
               <span>+{KUPEL_PRICE} BYN</span>
+            </div>
+          )}
+          {promoApplied && (
+            <div
+              className={styles.priceRow}
+              style={{ color: 'var(--color-moss)' }}
+            >
+              <span>Скидка {promoApplied.discount}%</span>
+              <span>−{discount} BYN</span>
             </div>
           )}
           <div className={styles.priceTotal}>
