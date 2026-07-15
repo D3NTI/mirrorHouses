@@ -108,15 +108,20 @@
 
 @media (max-width: 900px) {
   .grid {
-    grid-template-columns: repeat(3, 1fr);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
-  .title {
-    font-size: 28px;
+  .grid > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    margin: 0 auto;
+    width: 100%;
   }
 }
