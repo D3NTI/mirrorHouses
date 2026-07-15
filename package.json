@@ -11,14 +11,14 @@
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
-    "date-fns": "^4.4.0",
+    "date-fns": "^3.0.0",
     "next": "16.2.0",
     "nodemailer": "^8.0.10",
     "prisma": "^5.22.0",
     "react": "19.2.4",
     "react-day-picker": "^8.10.1",
     "react-dom": "19.2.4",
-    "react-icons": "^5.7.0",
+    "react-icons": "^5.0.0",
     "resend": "^6.12.4"
   },
   "devDependencies": {
@@ -27,7 +27,8 @@
   },
   "overrides": {
     "react-day-picker": {
-      "react": "$react"
+      "react": "$react",
+      "date-fns": "$date-fns"
     }
   }
 }
